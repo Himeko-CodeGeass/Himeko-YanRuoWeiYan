@@ -1,0 +1,1 @@
+# LEGACY CLOUD DEMO - DO NOT DEPLOY - This folder may have contained Telegram/Line/Discord tokens in history before v0.1.1-pilot. Tokens removed in v0.1.1-pilot. Render srv-dafmmof40ujc73bvhn3g Suspended. Scope: only https://github.com/Himeko-CodeGeass/Himeko-YanRuoWeiYan

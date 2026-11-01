@@ -1,0 +1,6 @@
+# Privacy - YanRuoWeiYan does not need keys
+.env
+.env.*
+*token*.json
+*secret*.json
+config.json

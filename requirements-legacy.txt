@@ -1,0 +1,8 @@
+flask
+requests
+gunicorn
+python-telegram-bot
+line-bot-sdk
+discord.py
+google-generativeai
+# LEGACY ONLY - DO NOT USE FOR core - in legacy_cloud_demo/ and legacy_agent/
