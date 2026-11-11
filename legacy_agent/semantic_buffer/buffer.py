@@ -1,6 +1,6 @@
 """
 Himeko-Cognitive-OS: Semantic Buffer Layer v1.0
-Author: Himeko-CodeGeass (主公)
+Author: Himeko-CodeGeass
 Description: Decouples emotional residue from core objective demands without invasive profiling.
 """
 

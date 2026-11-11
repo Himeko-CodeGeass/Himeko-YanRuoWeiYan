@@ -1,10 +1,10 @@
-# Contributing to Himeko-Cognitive-OS
+# Contributing to Himeko-YanRuoWeiYan
 
-Thank you for your interest in contributing to **Himeko-Cognitive-OS** (觀道學 / 言若未言 Cognitive OS). We welcome modular extensions that respect human cognitive dignity, non-invasive intent gestalt, and anti-fragile defense mechanics.
+Thank you for your interest in contributing to **Himeko-YanRuoWeiYan** (言若未言). We welcome modular extensions that respect human cognitive dignity and non-invasive design.
 
 ## Guidelines for Contributors
-1. **Respectful Ambiguity:** Core algorithms should avoid invasive profiling and preserve strategic interpretability.
-2. **Modular Chunking:** Keep implementations lightweight and compatible with constrained execution environments.
-3. **Main-Branch Discipline:** All pull requests must pass local integration pipelines (`examples/run_pipeline.py`).
+1. **Respectful Ambiguity:** Core algorithms should avoid invasive profiling and preserve user control.
+2. **On-device first:** Do not add network imports to `core/`. Changes must keep `tests/test_no_network.py` passing.
+3. **Main-Branch Discipline:** Please run `python typing_demo.py` and `python -m pytest tests/test_no_network.py -v` locally before opening a pull request.
 
-Please open an issue or submit a pull request under the guidance of Lead Architect **主公**.
+Please open an issue or submit a pull request.

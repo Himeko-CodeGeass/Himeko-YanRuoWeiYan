@@ -1,6 +1,6 @@
 """
 Himeko-Cognitive-OS: Dynamic Constitution & Antifragility v1.0
-Author: Himeko-CodeGeass (主公)
+Author: Himeko-CodeGeass
 Description: Implements adaptive constitutional alignment and anti-fragile defense mechanics.
 """
 

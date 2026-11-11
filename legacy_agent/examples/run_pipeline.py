@@ -1,6 +1,6 @@
 """
 Himeko-Cognitive-OS: Integration Pipeline Demo v1.0
-Author: Himeko-CodeGeass (主公)
+Author: Himeko-CodeGeass
 Description: Integrates Gestalt Engine, Semantic Buffer, and Dynamic Constitution into a unified workflow.
 """
 
