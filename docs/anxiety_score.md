@@ -62,11 +62,7 @@ These are design requirements for a future real key hook, which is not implement
 - Opt-in is OFF by default, and the local buffer is purgeable.
 - Current check: `tests/test_no_network.py` (run in CI) fails if `core/` imports a network library. A pass means no known network imports in `core/`. It is a static import check, not a security audit, and it cannot prove that no network call is ever possible.
 
-Legacy cloud demo:
-
-- The v0.1.0 cloud demo has been suspended (2026-10-29).
-- Its `main.py` was fixed to remove content logging, add a webhook secret check, and add rate limiting. An earlier version of it did log message content, so any logs from that period should be deleted.
-- Legacy files now live in `legacy_cloud_demo/`. They are not part of the on-device core. Do not deploy them.
+The v0.1.0 cloud demo was suspended on 2026-10-29 and has been removed from this repository. It is not part of the on-device pilot. An earlier version of that demo logged message content, so any logs from that period should be deleted.
 
 ## What We Need Next
 
@@ -77,7 +73,7 @@ Legacy cloud demo:
 
 ## Links for audit
 
-- Demo: `typing_demo.py` in the repo root; `examples/typing_demo.py` is the same file.
+- Demo: `typing_demo.py` in the repo root.
 - Core: `core/anxiety.py` - pause timer and deletion counter (no content logger; import math only).
 - Future ideas: `docs/future_research_ideas.md` (ideas only, not claims).
 - License: v0.1.0 and earlier = MIT; v0.1.1+ = Polyform Noncommercial 1.0.0 (not OSI) + commercial license.

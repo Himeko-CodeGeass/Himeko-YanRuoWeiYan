@@ -19,7 +19,7 @@ cd Himeko-YanRuoWeiYan
 python typing_demo.py
 ```
 
-預期輸出含 `anxiety_score_heuristic 59`。這是任意設定的先導公式，沒有臨床驗證。請只用 `typing_demo.py` 與 `core/anxiety.py`，不要執行或部署 `legacy_cloud_demo/` 或 `legacy_agent/`。
+預期輸出含 `anxiety_score_heuristic 59`。這是任意設定的先導公式，沒有臨床驗證。請只用 `typing_demo.py` 與 `core/anxiety.py`。
 
 ## 授權與售價
 

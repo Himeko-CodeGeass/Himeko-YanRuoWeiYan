@@ -64,12 +64,10 @@ Other domains (defense, drones, space, mental-health detection, and so on) are s
 ### 6. Architecture
 
 - `core/` - only `core/anxiety.py` is the on-device proof (import math only, no network). See [`core/anxiety.py`](core/anxiety.py).
-- `legacy_agent/` - leftover agent modules that may have network requests. Do NOT import them.
-- `typing_demo.py` - local demo with simulated pauses (a copy also lives in `examples/`). **This is the only file customers should run: `python typing_demo.py`**
+- `typing_demo.py` - local demo with simulated pauses. **This is the only file customers should run: `python typing_demo.py`**
 - `docs/` - methodology, limitations, future ideas. Reproducible calc: [`docs/anxiety_score.md`](docs/anxiety_score.md)
-- `legacy_cloud_demo/` - legacy v0.1.0 cloud demo that uploads data. **Do NOT deploy.** The old Render service has been Suspended.
 
-> ⚠️ Legacy warning: If you are a customer, use ONLY `typing_demo.py` + `core/anxiety.py`. Files under `legacy_cloud_demo/` are the v0.1.0 cloud demo that uploads data. Files under `legacy_agent/` are leftover agent modules that may have network requests and content storage. Do NOT deploy or import them.
+Customers should run `typing_demo.py` and use `core/anxiety.py`.
 
 ### 7. Quick Start
 
@@ -81,7 +79,7 @@ python typing_demo.py
 
 Expected output: `... anxiety_score_heuristic 59` (reproducible: sqrt(5213)=72.2, 0.6*72.2=43.3 + 16 = 59.3 -> 59)
 
-Do NOT run anything under `legacy_cloud_demo/` or `legacy_agent/`, or any file in `core/` except `anxiety.py`, for this pilot.
+For this pilot, run `python typing_demo.py`. In `core/`, use `anxiety.py` only.
 
 ### 8. License
 
@@ -157,12 +155,10 @@ anxiety_score_heuristic = clamp(0.6 * sqrt(最長停頓毫秒) + 0.4 * (刪除�
 ### 6. 架構
 
 - `core/`：只有 `core/anxiety.py` 是只在本地的證明（只有 import math，無網路）。見 [`core/anxiety.py`](core/anxiety.py)。
-- `legacy_agent/`：舊 agent 遺留，可能有網路請求，請勿引用。
-- `typing_demo.py`：本地示範，使用模擬停頓（`examples/` 內有一份副本）。**客戶只應執行這個：`python typing_demo.py`**
+- `typing_demo.py`：本地示範，使用模擬停頓。**客戶只應執行這個：`python typing_demo.py`**
 - `docs/`：方法、限制、未來構想。可重現計算：[`docs/anxiety_score.md`](docs/anxiety_score.md)
-- `legacy_cloud_demo/`：v0.1.0 舊雲端示範，會上傳資料，**請勿部署**。舊 Render 服務已暫停。
 
-> ⚠️ 舊檔警告：客戶請只用 `typing_demo.py` + `core/anxiety.py`。`legacy_cloud_demo/` 是會上傳資料的舊雲端 demo，`legacy_agent/` 是可能有網路請求和內容儲存的舊 agent 模組，請勿部署或引用。
+客戶請執行 `typing_demo.py`，並使用 `core/anxiety.py`。
 
 ### 7. 快速開始
 
@@ -174,7 +170,7 @@ python typing_demo.py
 
 預期輸出：`... anxiety_score_heuristic 59`（可重現：sqrt(5213)=72.2, 0.6*72.2=43.3 +16 =59.3 ->59）
 
-請勿執行 `legacy_cloud_demo/`、`legacy_agent/`，或 `core/` 除 `anxiety.py` 以外的任何檔案。
+此先導版請執行 `python typing_demo.py`。`core/` 裡只用 `anxiety.py`。
 
 ### 8. 授權
 

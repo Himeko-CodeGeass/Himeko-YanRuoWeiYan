@@ -6,8 +6,7 @@ file under core/ and fails if one imports a network-capable module.
 Limits (be honest about them):
 - It is a static import check. It cannot prove that no network call happens
   (for example through a library that is allowed but opens connections itself).
-- It looks at core/ only. api/, Procfile and render.yaml are the legacy cloud
-  demo and are deliberately not scanned.
+- It looks at core/ only.
 - Treat a pass as "no known network imports", not as a security audit.
 """
 
