@@ -55,18 +55,18 @@ An early version of this document wrote: score = clamp(0-100, w1 * log(...) + w2
 
 ## On-device only: requirements and how to verify
 
-These are requirements, not yet proof:
+These are design requirements for a future real key hook, which is not implemented yet.
 
 - `core/` must have no network access: no `requests`, `httpx`, `openai`, `socket`, or fetch.
 - No content logging: no `logger.info(user_message)`; only message length, hash, count, and timing.
 - Opt-in is OFF by default, and the local buffer is purgeable.
-- Planned check: a CI test that fails if `core/` imports a network library. Until it exists, treat the above as commitments.
+- Current check: `tests/test_no_network.py` (run in CI) fails if `core/` imports a network library. A pass means no known network imports in `core/`. It is a static import check, not a security audit, and it cannot prove that no network call is ever possible.
 
 Legacy cloud demo:
 
 - The v0.1.0 cloud demo has been suspended (2026-10-29).
 - Its `main.py` was fixed to remove content logging, add a webhook secret check, and add rate limiting. An earlier version of it did log message content, so any logs from that period should be deleted.
-- Legacy files `api/`, `Procfile`, and `render.yaml` will move to `legacy_cloud_demo/` in the next commit. They are not part of the on-device core.
+- Legacy files now live in `legacy_cloud_demo/`. They are not part of the on-device core. Do not deploy them.
 
 ## What We Need Next
 
@@ -78,10 +78,10 @@ Legacy cloud demo:
 ## Links for audit
 
 - Demo: `typing_demo.py` in the repo root; `examples/typing_demo.py` is the same file.
-- Core: `core/` - pause timer, deletion counter (no content logger by default).
+- Core: `core/anxiety.py` - pause timer and deletion counter (no content logger; import math only).
 - Future ideas: `docs/future_research_ideas.md` (ideas only, not claims).
 - License: v0.1.0 and earlier = MIT; v0.1.1+ = Polyform Noncommercial 1.0.0 (not OSI) + commercial license.
-- Commercial license (Tingmo Creative): sold as-is for an early prototype, with no support, no SLA, and no warranty. Early Bird: the $999 (NT$32,000) option covers all v0.x releases. Terms and refund policy are on the checkout page; see the README for the link.
+- Commercial license (Tingmo Creative): sold as-is for an early prototype, with no support, no SLA, no warranty, and no updates. Price is a fixed USD 99 one-time (Lemon Squeezy charges in TWD; about NT$3,261 at 32.94 TWD/USD on 2026-11-11). This is not an Early Bird or All Access plan and does not include later versions. Terms and refund policy are on the checkout page; see the README for the link.
 
 ---
 
