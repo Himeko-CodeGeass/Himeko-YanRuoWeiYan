@@ -5,7 +5,7 @@
 > The first step of Human-AI Alignment is not to see through each other, but to learn respectful blank space.
 > 人機共築輝煌的第一步，不是看穿彼此，而是學會尊重的留白。
 
-**Status:** Early prototype | **Data:** simulated demo only (no real-user data yet) | **License:** v0.1.1+ Polyform Noncommercial 1.0.0 (source-available, not OSI open source) + Commercial License
+**Status:** Early prototype | **Data:** simulated demo only (no real-user data yet) | **License:** v0.1.1+ Polyform Noncommercial 1.0.0 (source-available, not OSI open source) + Commercial License (USD 99 one-time, this version as-is, no updates)
 
 ---
 
@@ -53,7 +53,7 @@ These are the rules the project is built to follow. They are design requirements
 - **Purgeable:** one action clears the local buffer.
 - If these cannot be guaranteed, the feature does not ship.
 
-How this will be checked: a CI test that fails if `core/` imports network libraries (for example `requests`, `httpx`, `socket`). Until that test exists, treat these as commitments, not proof.
+How this is checked: `tests/test_no_network.py` (run in CI) fails if `core/` imports network libraries (for example `requests`, `httpx`, `socket`). A pass means no known network imports in `core/`. It is a static import check, not a security audit, and it cannot prove that no network call is ever possible.
 
 ### 5. Scope
 
@@ -63,12 +63,13 @@ Other domains (defense, drones, space, mental-health detection, and so on) are s
 
 ### 6. Architecture
 
-- `core/` - pause timer, deletion counter (no content logger by default). **Only `core/anxiety.py` is the on-device proof (import math only, no network).** Other files in `core/` (`constitution.py`, `gestalt_engine.py`, `heartbeat.py`, `memory_manager.py`, `semantic_buffer.py`, `tools.py`, `vector_memory.py`) and folders `dynamic_constitution/`, `semantic_buffer/` are legacy agent code that may have network requests. Do NOT import them. They will be moved to `legacy_agent/` next commit. See [`core/anxiety.py`](core/anxiety.py).
+- `core/` - only `core/anxiety.py` is the on-device proof (import math only, no network). See [`core/anxiety.py`](core/anxiety.py).
+- `legacy_agent/` - leftover agent modules that may have network requests. Do NOT import them.
 - `typing_demo.py` - local demo with simulated pauses (a copy also lives in `examples/`). **This is the only file customers should run: `python typing_demo.py`**
 - `docs/` - methodology, limitations, future ideas. Reproducible calc: [`docs/anxiety_score.md`](docs/anxiety_score.md)
-- `api/`, `Procfile`, `render.yaml`, `main.py` - legacy v0.1.0 cloud demo that uploads data. **Do NOT deploy.** Legacy Render service has been Suspended. Will be moved to `legacy_cloud_demo/` next commit.
+- `legacy_cloud_demo/` - legacy v0.1.0 cloud demo that uploads data. **Do NOT deploy.** The old Render service has been Suspended.
 
-> ⚠️ Legacy warning: If you are a customer, use ONLY `typing_demo.py` + `core/anxiety.py`. `api/`, `Procfile`, `render.yaml`, `main.py` are v0.1.0 cloud demo that uploads data. `core/` except `anxiety.py` are legacy agent modules that may have network requests and content storage. Do NOT deploy or import them. They will be moved to `legacy_cloud_demo/` and `legacy_agent/`.
+> ⚠️ Legacy warning: If you are a customer, use ONLY `typing_demo.py` + `core/anxiety.py`. Files under `legacy_cloud_demo/` are the v0.1.0 cloud demo that uploads data. Files under `legacy_agent/` are leftover agent modules that may have network requests and content storage. Do NOT deploy or import them.
 
 ### 7. Quick Start
 
@@ -80,13 +81,13 @@ python typing_demo.py
 
 Expected output: `... anxiety_score_heuristic 59` (reproducible: sqrt(5213)=72.2, 0.6*72.2=43.3 + 16 = 59.3 -> 59)
 
-Do NOT run `main.py`, `api/`, `Procfile`, or any file in `core/` except `anxiety.py` for this pilot.
+Do NOT run anything under `legacy_cloud_demo/` or `legacy_agent/`, or any file in `core/` except `anxiety.py`, for this pilot.
 
 ### 8. License
 
 - **v0.1.1 and later:** Polyform Noncommercial 1.0.0. Free for personal use, research, and non-commercial use. Commercial use needs a separate commercial license. This is source-available, **not** OSI-approved open source.
 - **v0.1.0 and earlier (commits up to 123):** MIT, as originally published. Those versions can be used commercially under MIT terms.
-- **Commercial license:** Tingmo Creative. Sold **as-is** for an early prototype: no support, no SLA, no warranty, and no guarantee of future versions, real-user validation, or any feature listed under "What We Need Next". It covers commercial use of the code released as v0.1.1-pilot only (typing_demo.py + core/anxiety.py). Early Bird All Access covers all v0.x releases (v0.1.x to v0.9.x) via same Product ID auto-update, NOT v1.0+ lifetime. Refund terms are stated on the checkout page; please read them before buying.
+- **Commercial license:** Tingmo Creative. Sold **as-is** for this early prototype, at a fixed price of **USD 99** (one-time). The Lemon Squeezy store charges in TWD; at the 2026-11-11 rate of about 32.94 TWD/USD this is about NT$3,261, and the amount shown at checkout may vary with the exchange rate. There is no support, no SLA, no warranty, and no updates. The license covers commercial use of the code published as v0.1.1-pilot only (`typing_demo.py` + `core/anxiety.py`). It is not an Early Bird plan, not All Access, and it does not include later versions or auto-updates. Any future price cut would only come after later product generations, and those versions are sold separately. Refund terms are stated on the checkout page; please read them before buying.
   - Checkout: https://tingmocreative.lemonsqueezy.com/checkout/buy/5d845d7e-6c55-4b27-9481-d06c62c776ff
   - Email (optional, replies are not guaranteed): jizheng.contact@proton.me
 
@@ -145,7 +146,7 @@ anxiety_score_heuristic = clamp(0.6 * sqrt(最長停頓毫秒) + 0.4 * (刪除�
 - **可清除**：一個動作即可清空本地緩衝。
 - 如果無法保證以上各點，功能就不發布。
 
-檢驗方式：加入 CI 測試，只要 `core/` 引入網路套件（例如 `requests`、`httpx`、`socket`）就失敗。在測試完成之前，請把這些視為承諾，而不是已被證明的事實。
+檢驗方式：`tests/test_no_network.py`（已在 CI 執行）會在 `core/` 引入網路套件（例如 `requests`、`httpx`、`socket`）時失敗。測試通過只代表 `core/` 沒有已知的網路套件引入。這是靜態引入檢查，不是安全審計，也不能證明永遠不可能出現網路連線。
 
 ### 5. 範圍
 
@@ -155,12 +156,13 @@ anxiety_score_heuristic = clamp(0.6 * sqrt(最長停頓毫秒) + 0.4 * (刪除�
 
 ### 6. 架構
 
-- `core/`：停頓計時、刪除計數（預設無內容記錄）。**只有 `core/anxiety.py` 是只在本地的證明（只有 import math，無網路）。** 其他檔案 `constitution.py`, `gestalt_engine.py`, `heartbeat.py`, `memory_manager.py`, `semantic_buffer.py`, `tools.py`, `vector_memory.py` 和資料夾 `dynamic_constitution/`, `semantic_buffer/` 是舊 agent 遺留，可能有網路請求，請勿引用，將移到 `legacy_agent/`。
+- `core/`：只有 `core/anxiety.py` 是只在本地的證明（只有 import math，無網路）。見 [`core/anxiety.py`](core/anxiety.py)。
+- `legacy_agent/`：舊 agent 遺留，可能有網路請求，請勿引用。
 - `typing_demo.py`：本地示範，使用模擬停頓（`examples/` 內有一份副本）。**客戶只應執行這個：`python typing_demo.py`**
 - `docs/`：方法、限制、未來構想。可重現計算：[`docs/anxiety_score.md`](docs/anxiety_score.md)
-- `api/`、`Procfile`、`render.yaml`、`main.py`：v0.1.0 舊雲端示範，會上傳資料，**請勿部署**。舊 Render 服務已暫停，將移到 `legacy_cloud_demo/`
+- `legacy_cloud_demo/`：v0.1.0 舊雲端示範，會上傳資料，**請勿部署**。舊 Render 服務已暫停。
 
-> ⚠️ 舊檔警告：客戶請只用 `typing_demo.py` + `core/anxiety.py`。`api/`, `Procfile`, `render.yaml`, `main.py` 是會上傳資料的舊雲端 demo，`core/` 除 `anxiety.py` 外是可能有網路請求和內容儲存的舊 agent 模組，請勿部署或引用，將移到 `legacy_cloud_demo/` 和 `legacy_agent/`。
+> ⚠️ 舊檔警告：客戶請只用 `typing_demo.py` + `core/anxiety.py`。`legacy_cloud_demo/` 是會上傳資料的舊雲端 demo，`legacy_agent/` 是可能有網路請求和內容儲存的舊 agent 模組，請勿部署或引用。
 
 ### 7. 快速開始
 
@@ -172,13 +174,13 @@ python typing_demo.py
 
 預期輸出：`... anxiety_score_heuristic 59`（可重現：sqrt(5213)=72.2, 0.6*72.2=43.3 +16 =59.3 ->59）
 
-請勿執行 `main.py`, `api/`, `Procfile` 或 `core/` 除 `anxiety.py` 以外的任何檔案。
+請勿執行 `legacy_cloud_demo/`、`legacy_agent/`，或 `core/` 除 `anxiety.py` 以外的任何檔案。
 
 ### 8. 授權
 
 - **v0.1.1 之後：** Polyform Noncommercial 1.0.0。個人、研究、非營利使用免費，商用需另購商業授權。屬於原始碼公開（source-available），**不是** OSI 認可的開源。
 - **v0.1.0 及之前（commit 123 以前）：** 維持 MIT，這些版本可依 MIT 條款商用。
-- **商業授權：** 聽默文創。以**現狀（as-is）**出售早期原型：無技術支援、無服務水準協議、無保固，也不保證未來版本、真實使用者驗證，或「下一步需要的證據」中列出的任何功能。授權範圍為 v0.1.1-pilot 所釋出程式碼（typing_demo.py + core/anxiety.py）的商業使用。Early Bird All Access 涵蓋所有 v0.x 版本（v0.1.x 到 v0.9.x），透過同一 Product ID 自動更新，不含 v1.0+ 終身。退款條款以結帳頁面為準，購買前請先閱讀。
+- **商業授權：** 聽默文創。以**現狀（as-is）**出售此早期原型，固定售價 **USD 99**（一次付清）。Lemon Squeezy 商店以新台幣結帳；依 2026-11-11 約 32.94 新台幣／美元匯率，約為 NT$3,261，結帳頁顯示金額可能隨匯率變動。無技術支援、無服務水準協議、無保固，也不提供更新。授權範圍僅為已發布的 v0.1.1-pilot 程式碼（typing_demo.py + core/anxiety.py）的商業使用。這不是早鳥方案，不是 All Access，也不包含後續版本或自動更新。若未來降價，只會在後代產品推出之後，且那些版本需另行購買。退款條款以結帳頁面為準，購買前請先閱讀。
   - 結帳連結：https://tingmocreative.lemonsqueezy.com/checkout/buy/5d845d7e-6c55-4b27-9481-d06c62c776ff
   - 電子郵件（選用，不保證回覆）：jizheng.contact@proton.me
 
